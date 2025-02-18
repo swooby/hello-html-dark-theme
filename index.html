@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en" data-theme="">
+
+<head>
+  <meta charset="utf-8">
+  <title>hello-html-dark-theme</title>
+  <style>
+    :root {
+      --bg-color: #fff;
+      --text-color: #000;
+      --link-color: blue;
+    }
+
+    [data-theme="dark"] {
+      --bg-color: #121212;
+      --text-color: #e0e0e0;
+      --link-color: #bb86fc;
+    }
+
+    html {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    body {
+      font-family: "Courier New", Courier, monospace;
+      width: 768px;
+      margin: 20px auto;
+      background-color: inherit;
+      color: inherit;
+    }
+
+    a {
+      color: var(--link-color);
+    }
+
+    .toggle-btn {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      border: none;
+      background: none;
+      font-size: 1.5em;
+      cursor: pointer;
+    }
+
+    h1 {
+      margin-bottom: 0;
+    }
+
+    ul {
+      padding-left: 0;
+    }
+
+    li {
+      list-style-position: inside;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+  </style>
+  <script>
+    function getTheme() {
+      const theme = localStorage.getItem('theme');
+      return theme === 'dark' || theme === 'light'
+        ? theme
+        : window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+
+    function applyTheme(theme) {
+      if (theme === undefined) {
+        theme = getTheme();
+      }
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('theme', theme);
+      const toggleBtn = document.getElementById('theme-toggle');
+      if (toggleBtn) {
+        if (theme === 'dark') {
+          toggleBtn.textContent = '☀️';
+          toggleBtn.title = 'Set light mode';
+        } else {
+          toggleBtn.textContent = '🌙';
+          toggleBtn.title = 'Set dark mode';
+        }
+      }
+    }
+
+    applyTheme();
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const toggleBtn = document.getElementById('theme-toggle');
+      toggleBtn.addEventListener('click', () => {
+        applyTheme(getTheme() === 'dark' ? 'light' : 'dark');
+      });
+      applyTheme();
+      toggleBtn.style.visibility = 'visible';
+    });
+
+    //...
+
+  </script>
+</head>
+
+<body>
+  <button id="theme-toggle" class="toggle-btn" aria-label="Toggle light/dark mode"></button>
+  <h1>Hello</h1>
+  <ul>
+    <li>A Link: <a
+        href="https://swooby.github.io/hello-html-dark-theme">https://swooby.github.io/hello-html-dark-theme</a>
+    </li>
+  </ul>
+</body>
+
+</html>
